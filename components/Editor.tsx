@@ -101,7 +101,9 @@ export const Editor: React.FC<EditorProps> = ({ subgroupId }) => {
               uploader: {
                 async uploadByFile(file: File) {
                   // upload to uploadthing
-                  const [res] = await uploadFiles([file], "imageUploader");
+                  const [res] = await uploadFiles({
+                    files: [file],
+                    endpoint:  "imageUploader"});
 
                   return {
                     success: 1,
