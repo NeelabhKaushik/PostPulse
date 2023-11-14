@@ -1,18 +1,8 @@
-import { getToken } from "next-auth/jwt";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { createNextRouteHandler } from "uploadthing/next";
 
-const f = createUploadthing();
+import { ourFileRouter } from "./core";
 
-export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "4MB" } })
-    .middleware(async (req) => {
-      const user = await getToken({ req });
-
-      if (!user) throw new Error("Unauthorized");
-
-      return { userId: user.id };
-    })
-    .onUploadComplete(async ({ metadata, file }) => {}),
-} satisfies FileRouter;
-
-export type OurFileRouter = typeof ourFileRouter;
+// Export routes for Next App Router
+export const { GET, POST } = createNextRouteHandler({
+  router: ourFileRouter,
+});
