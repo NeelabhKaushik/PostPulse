@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  Toast,
+  ToastAction,
   ToastClose,
   ToastDescription,
   ToastProvider,
