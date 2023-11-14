@@ -1,7 +1,7 @@
-import { Editor } from '@/components/Editor'
 import { Button } from '@/components/ui/button'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
+import { Editor } from '@/components/Editor'
 
 interface pageProps {
   params: {
@@ -27,7 +27,7 @@ const page = async ({ params }: pageProps) => {
             Create Post
           </h3>
           <p className='ml-2 mt-1 truncate text-sm text-gray-500'>
-            in r/{params.slug}
+            in g/{params.slug}
           </p>
         </div>
       </div>
