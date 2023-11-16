@@ -104,14 +104,23 @@ const Layout = async ({
                   subgroupName={subgroup.name}
                 />
               ) : null}
-              <Link
+              {session ?  <Link
                 className={buttonVariants({
                   variant: "outline",
                   className: "w-full mb-6",
                 })}
                 href={`/g/${slug}/submit`}>
                 Create Post
-              </Link>
+              </Link> : <Link
+                className={buttonVariants({
+                  variant: "outline",
+                  className: "w-full mb-6",
+                })}
+                href={`/sign-up`}
+                >
+                Create Post
+              </Link>} 
+             
             </dl>
           </div>
         </div>
