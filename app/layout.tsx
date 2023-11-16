@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Breadit",
+  title: "PostPulse",
   description: "A Reddit clone built with Next.js and TypeScript.",
 };
 
