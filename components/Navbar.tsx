@@ -1,10 +1,10 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { UserAccountNav } from "./UserAccountNav";
 import { Icons } from "./Icons";
-import { User } from "lucide-react";
+import { UserAccountNav } from "./UserAccountNav";
+import { buttonVariants } from "./ui/button";
+import SearchBar from "./SearchBar";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -20,7 +20,7 @@ const Navbar = async () => {
         </Link>
 
         {/* search bar */}
-        {/* <SearchBar /> */}
+        <SearchBar />
 
         {/* actions */}
         {session?.user ? (

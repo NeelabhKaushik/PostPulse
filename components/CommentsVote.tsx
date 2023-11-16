@@ -23,7 +23,7 @@ const CommentsVote = ({
   initialVote,
 }: CommentsVoteProps) => {
   const { loginToast } = useCustomToasts();
-  const [VoteAmt, setVoteAmt] = useState<number>(initialVotesAmt);
+  const [voteAmt, setVoteAmt] = useState<number>(initialVotesAmt);
   const [currentVote, setCurrentVote] = useState(initialVote);
 
   const prevVote = usePrevious(currentVote);
@@ -64,20 +64,21 @@ const CommentsVote = ({
         else if (type === "DOWN") setVoteAmt((prev) => prev + 1);
       } else {
         // User is voting in the opposite direction, so subtract 2
-        setCurrentVote(type);
-        if (type === "UP") setVoteAmt((prev) => prev + (currentVote?.type ? 2 : 1));
+        setCurrentVote({ type });
+        if (type === "UP") setVoteAmt((prev) => prev + (currentVote ? 2 : 1));
         else if (type === "DOWN")
-          setVoteAmt((prev) => prev - (currentVote?.type ? 2 : 1));
+          setVoteAmt((prev) => prev - (currentVote ? 2 : 1));
       }
     },
   });
 
   return (
     <div className="flex gap-1">
+      {/* upvote */}
       <Button
         onClick={() => vote("UP")}
-        size="sm"
-        variant={"ghost"}
+        size="xs"
+        variant="ghost"
         aria-label="upvote"
       >
         <ArrowBigUp
@@ -86,13 +87,20 @@ const CommentsVote = ({
           })}
         />
       </Button>
-      <p className="text-center py-2 font-medium text-sm text-zinc-900">
-        {VoteAmt}
+
+      {/* score */}
+      <p className="text-center py-2 px-1 font-medium text-xs text-zinc-900">
+        {voteAmt}
       </p>
+
+      {/* downvote */}
       <Button
         onClick={() => vote("DOWN")}
-        size="sm"
-        variant={"ghost"}
+        size="xs"
+        className={cn({
+          "text-emerald-500": currentVote?.type === "DOWN",
+        })}
+        variant="ghost"
         aria-label="downvote"
       >
         <ArrowBigDown

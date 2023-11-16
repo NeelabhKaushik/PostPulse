@@ -15,6 +15,7 @@ import { UserAvatar } from "./UserAvatar";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import { toast } from "@/hooks/use-toast";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -48,6 +49,17 @@ const PostComment = ({
       };
       const { data } = await axios.patch(`/api/subgroup/post/comment`, payload);
       return data;
+    },
+    onError: () => {
+      return toast({
+        title: "Something Went Wrong",
+        description: "Comment was not posted, Please try Again",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      router.refresh();
+      setIsReplying(false);
     },
   });
   return (
@@ -101,14 +113,14 @@ const PostComment = ({
                 rows={1}
                 placeholder="What are your thoughts?"
               />
-                <div className="mt-2 flex justify-end gap-2">
-              <Button
-                tabIndex={-1}
-                variant={"subtle"}
-                onClick={() => setIsReplying(false)}
-              >
-                Cancel
-              </Button>
+              <div className="mt-2 flex justify-end gap-2">
+                <Button
+                  tabIndex={-1}
+                  variant={"subtle"}
+                  onClick={() => setIsReplying(false)}
+                >
+                  Cancel
+                </Button>
                 <Button
                   isLoading={isLoading}
                   disabled={input.length === 0}
