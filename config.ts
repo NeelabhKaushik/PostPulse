@@ -1,3 +1,1 @@
 export const INFINITE_SCROLL_PAGINATION_RESULTS = 3;
-
-export const CACHE_AFTER_UPVOTES = 100;

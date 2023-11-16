@@ -1,26 +1,16 @@
 "use client";
 
+import { toast } from "@/hooks/use-toast";
 import { UsernameValidator, Usernamerequest } from "@/lib/validators/username";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: Pick<User, "id" | "username">;
@@ -56,8 +46,15 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
             variant: "destructive",
           });
         }
+        
+        if (err.response?.status === 400) {
+          return toast({
+            title: "Username formate error.",
+            description: "Please enter username in required format.",
+            variant: "destructive",
+          });
+        }
       }
-
       return toast({
         title: "Something went wrong.",
         description: "Your username was not updated. Please try again.",
@@ -68,7 +65,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
       toast({
         description: "Your username has been updated.",
       });
-      router.refresh();
+      router.push("/");
     },
   });
   return (
@@ -77,9 +74,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold">Change your username</h1>
         </div>
-
         <hr className="bg-red-500 h-px" />
-
         <div>
           <p className="text-xs pb-2">
             Username can only contain letters (a-z, A-Z), numbers (0-9), or
@@ -93,12 +88,12 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
               id="name"
               value={input}
               className="pl-6"
+              {...register('name')}
               onChange={(e) => setInput(e.target.value)}
             />
-            {errors?.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-            )}
+
           </div>
+          {errors?.name && <p className="px-1 mt-2 text-xs text-red-600">Please write username in required format.</p>}
         </div>
 
         <div className="flex justify-end gap-4">
@@ -112,7 +107,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
           <Button
             isLoading={isLoading}
             disabled={input.length === 0}
-            onClick={() => updateUsername({ name: input })}
+            onClick={handleSubmit((e) => updateUsername(e))}
           >
             Change
           </Button>

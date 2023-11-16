@@ -18,7 +18,7 @@ const page = async () => {
       <div className="grid items-start gap-8">
         <h1 className="font-bold text-3xl md:text-4xl">Settings</h1>
       </div>
-      <div className="grid gap-10">
+      <div className="grid gap-10 mb-2">
         <UserNameForm
           user={{
             //@ts-ignore

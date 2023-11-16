@@ -40,7 +40,7 @@ const SearchBar = () => {
   });
   const request = debounce(async () => {
     refetch();
-  }, 500);
+  }, 300);
   const debounceRequest = useCallback(() => {
     request();
   }, []);

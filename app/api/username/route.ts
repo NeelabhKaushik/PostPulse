@@ -19,9 +19,10 @@ export async function PATCH(req: Request) {
       where: {
         username: name,
       },
-    });
+    })
+
     if (username) {
-      return new Response("Username is taken", { status: 401 });
+      return new Response('Username is taken', { status: 409 })
     }
 
     await db.user.update({
@@ -35,7 +36,8 @@ export async function PATCH(req: Request) {
     });
 
     return new Response("OK");
-  } catch (error) {
+  }
+   catch (error) {
     error;
     if (error instanceof z.ZodError) {
       return new Response("Invalid request", { status: 400 });
