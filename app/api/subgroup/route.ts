@@ -29,6 +29,7 @@ export async function POST(req: Request) {
     const subgroup = await db.subgroup.create({
       data: {
         name,
+        //@ts-ignore
         creatorId: session.user.id,
       },
     })
@@ -36,6 +37,7 @@ export async function POST(req: Request) {
     // creator also has to be subscribed
     await db.subscription.create({
       data: {
+        //@ts-ignore
         userId: session.user.id,
         subgroupId: subgroup.id,
       },

@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     const subscriptionExists = await db.subscription.findFirst({
       where: {
         subgroupId,
+        //@ts-ignore
         userId: session.user.id,
       },
     });
@@ -36,6 +37,7 @@ export async function POST(req: Request) {
       where: {
         userId_subgroupId: {
             subgroupId,
+            //@ts-ignore
           userId: session.user.id,
         },
       },

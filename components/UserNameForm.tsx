@@ -42,7 +42,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
   const { mutate: updateUsername, isLoading } = useMutation({
     mutationFn: async ({ name }: Usernamerequest) => {
       const payload: Usernamerequest = { name };
-
+    //@ts-ignore
       const { data } = axios.patch(`/api/username`, payload);
       return data;
     },

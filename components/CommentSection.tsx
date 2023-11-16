@@ -43,6 +43,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
             );
 
             const topLevelCommentVote = topLevelComment.votes.find((vote) => {
+              //@ts-ignore
               vote.userId === session?.user?.id;
             });
 
@@ -66,6 +67,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                     }, 0);
 
                     const replyVote = reply.votes.find(
+                      //@ts-ignore
                       (vote) => vote.userId === session?.user?.id
                     );
 

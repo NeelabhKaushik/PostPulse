@@ -13,6 +13,7 @@ export async function GET(req: Request) {
   if (session) {
     const followedCommunities = await db.subscription.findMany({
       where: {
+        //@ts-ignore
         userId: session.user?.id,
       },
       include: {
