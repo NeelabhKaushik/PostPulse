@@ -46,15 +46,8 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
             variant: "destructive",
           });
         }
-        
-        if (err.response?.status === 400) {
-          return toast({
-            title: "Username formate error.",
-            description: "Please enter username in required format.",
-            variant: "destructive",
-          });
-        }
       }
+
       return toast({
         title: "Something went wrong.",
         description: "Your username was not updated. Please try again.",
@@ -88,12 +81,15 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
               id="name"
               value={input}
               className="pl-6"
-              {...register('name')}
+              {...register("name")}
               onChange={(e) => setInput(e.target.value)}
             />
-
           </div>
-          {errors?.name && <p className="px-1 mt-2 text-xs text-red-600">Please write username in required format.</p>}
+          {errors?.name && (
+            <p className="px-1 mt-2 text-xs text-red-600">
+              Please write username in required format.
+            </p>
+          )}
         </div>
 
         <div className="flex justify-end gap-4">
