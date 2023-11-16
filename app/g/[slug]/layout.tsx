@@ -89,8 +89,8 @@ const Layout = async ({
                   <div className="text-gray-900">{memberCount}</div>
                 </dd>
               </div>
-              //@ts-ignore
-              {subgroup.creatorId === session?.user?.id ? (
+              {//@ts-ignore
+              subgroup.creatorId === session?.user?.id ? (
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">You created this community</dt>
                 </div>
