@@ -3,7 +3,7 @@
 import { UsernameValidator, Usernamerequest } from "@/lib/validators/username";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Card,
@@ -23,11 +23,12 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: Pick<User, 'id' | 'username'>
+  user: Pick<User, "id" | "username">;
 }
 
 const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
   const router = useRouter();
+  const [input, setInput] = useState<string>("");
   const {
     handleSubmit,
     register,
@@ -42,7 +43,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
   const { mutate: updateUsername, isLoading } = useMutation({
     mutationFn: async ({ name }: Usernamerequest) => {
       const payload: Usernamerequest = { name };
-    //@ts-ignore
+      //@ts-ignore
       const { data } = axios.patch(`/api/username`, payload);
       return data;
     },
@@ -71,45 +72,53 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
     },
   });
   return (
-    <form
-      className={cn(className)}
-      onSubmit={handleSubmit((e) => updateUsername(e))}
-      {...props}
-    >
-      <Card>
-        <CardHeader>
-          <CardTitle>Your username</CardTitle>
-          <CardDescription>
-            Please enter a display name you are comfortable with.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="relative grid gap-1">
-            <div className="absolute top-0 left-0 w-6 h-10 grid place-items-center">
-              <span className="text-sm text-zinc-400">u/</span>
-            </div>
-            <Label className="sr-only" htmlFor="name">
-              Name
-            </Label>
+    <div className="container flex items-center h-full max-w-3xl mx-auto">
+      <div className="relative bg-white w-full h-fit p-4 rounded-lg space-y-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl font-semibold">Change your username</h1>
+        </div>
+
+        <hr className="bg-red-500 h-px" />
+
+        <div>
+          <p className="text-xs pb-2">
+            Username can only contain letters (a-z, A-Z), numbers (0-9), or
+            underscores (_).
+          </p>
+          <div className="relative">
+            <p className="absolute text-sm left-0 w-8 inset-y-0 grid place-items-center text-zinc-400">
+              u/
+            </p>
             <Input
               id="name"
-              className="w-[400px] pl-6"
-              size={32}
-              {...register("name")}
+              value={input}
+              className="pl-6"
+              onChange={(e) => setInput(e.target.value)}
             />
             {errors?.name && (
-              <p className="px-1 text-xs text-red-600">
-                Error: Username can only contain letters (a-z, A-Z), numbers
-                (0-9), or underscores (_).{" "}
-              </p>
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )}
           </div>
-        </CardContent>
-        <CardFooter>
-          <Button isLoading={isLoading}>Change name</Button>
-        </CardFooter>
-      </Card>
-    </form>
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <Button
+            disabled={isLoading}
+            variant="subtle"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+          <Button
+            isLoading={isLoading}
+            disabled={input.length === 0}
+            onClick={() => updateUsername({ name: input })}
+          >
+            Change
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
