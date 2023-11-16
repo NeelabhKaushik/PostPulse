@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "PostPulse",
-  description: "A Reddit clone built with Next.js and TypeScript.",
+  description: "A centralized hub for diverse discussions on trending topics.",
 };
 
 export default function RootLayout({
