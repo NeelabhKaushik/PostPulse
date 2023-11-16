@@ -83,7 +83,7 @@ const CommentsVote = ({
       >
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
-            "text-emerald-500 fill-emerald-500": currentVote?.type === "UP",
+            "text-purple-500 fill-purple-500": currentVote?.type === "UP",
           })}
         />
       </Button>
@@ -98,7 +98,7 @@ const CommentsVote = ({
         onClick={() => vote("DOWN")}
         size="xs"
         className={cn({
-          "text-emerald-500": currentVote?.type === "DOWN",
+          "text-purple-500": currentVote?.type === "DOWN",
         })}
         variant="ghost"
         aria-label="downvote"

@@ -86,7 +86,7 @@ const PostVoteClient = ({
       >
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
-            "text-emerald-500 fill-emerald-500": currentVote === "UP",
+            "text-purple-500 fill-purple-500": currentVote === "UP",
           })}
         />
       </Button>
