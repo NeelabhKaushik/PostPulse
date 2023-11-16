@@ -54,12 +54,12 @@ const SubscribeLeaveToggle = ({
       });
       toast({
         title: "Subscribed!",
-        description: `You are now subscribed to r/${subgroupName}`,
+        description: `You are now subscribed to g/${subgroupName}`,
       });
     },
   });
 
-  const { mutate: unsubscribe, isPending: isUnsubLoading } = useMutation({
+  const { mutate: unsubscribe, isLoading: isUnsubLoading } = useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubgroupPayload = {
         subgroupId,

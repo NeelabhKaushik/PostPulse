@@ -3,7 +3,7 @@
 import { useCustomToasts } from "@/hooks/use-custom-toast";
 import { usePrevious } from "@mantine/hooks";
 import { VoteType } from "@prisma/client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,52 +29,52 @@ const PostVoteClient = ({
   const prevVote = usePrevious(currentVote);
 
   useEffect(() => {
-    setCurrentVote(initialVote)
-  }, [initialVote])
+    setCurrentVote(initialVote);
+  }, [initialVote]);
 
   const { mutate: vote } = useMutation({
     mutationFn: async (type: VoteType) => {
       const payload: PostVoteRequest = {
         voteType: type,
         postId: postId,
-      }
+      };
 
-      await axios.patch('/api/subgroup/post/vote', payload)
+      await axios.patch("/api/subgroup/post/vote", payload);
     },
     onError: (err, voteType) => {
-      if (voteType === 'UP') setVoteAmt((prev) => prev - 1)
-      else setVoteAmt((prev) => prev + 1)
+      if (voteType === "UP") setVoteAmt((prev) => prev - 1);
+      else setVoteAmt((prev) => prev + 1);
 
       // reset current vote
-      setCurrentVote(prevVote)
+      setCurrentVote(prevVote);
 
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
-          return loginToast()
+          return loginToast();
         }
       }
 
       return toast({
-        title: 'Something went wrong.',
-        description: 'Couldnt vote the post. Please try again.',
-        variant: 'destructive',
-      })
+        title: "Something went wrong.",
+        description: "Couldnt vote the post. Please try again.",
+        variant: "destructive",
+      });
     },
     onMutate: (type: VoteType) => {
       if (currentVote === type) {
         // User is voting the same way again, so remove their vote
-        setCurrentVote(undefined)
-        if (type === 'UP') setVoteAmt((prev) => prev - 1)
-        else if (type === 'DOWN') setVoteAmt((prev) => prev + 1)
+        setCurrentVote(undefined);
+        if (type === "UP") setVoteAmt((prev) => prev - 1);
+        else if (type === "DOWN") setVoteAmt((prev) => prev + 1);
       } else {
         // User is voting in the opposite direction, so subtract 2
-        setCurrentVote(type)
-        if (type === 'UP') setVoteAmt((prev) => prev + (currentVote ? 2 : 1))
-        else if (type === 'DOWN')
-        setVoteAmt((prev) => prev - (currentVote ? 2 : 1))
+        setCurrentVote(type);
+        if (type === "UP") setVoteAmt((prev) => prev + (currentVote ? 2 : 1));
+        else if (type === "DOWN")
+          setVoteAmt((prev) => prev - (currentVote ? 2 : 1));
       }
     },
-  })
+  });
 
   return (
     <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
