@@ -24,7 +24,7 @@ const SubscribeLeaveToggle = ({
   const { loginToast } = useCustomToasts();
   const router = useRouter();
 
-  const { mutate: subscribe, isPending: isSubLoading } = useMutation({
+  const { mutate: subscribe, isLoading: isSubLoading } = useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubgroupPayload = {
         subgroupId,

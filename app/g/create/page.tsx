@@ -15,7 +15,7 @@ const Page = () => {
   const [input, setInput] = useState<string>('')
   const { loginToast } = useCustomToasts()
 
-  const { mutate: createCommunity, isPending } = useMutation({
+  const { mutate: createCommunity, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: CreateSubgroupPayload = {
         name: input,
@@ -86,13 +86,13 @@ const Page = () => {
 
         <div className='flex justify-end gap-4'>
           <Button
-            disabled={isPending}
+            disabled={isLoading}
             variant='subtle'
             onClick={() => router.back()}>
             Cancel
           </Button>
           <Button
-            isLoading={isPending}
+            isLoading={isLoading}
             disabled={input.length === 0}
             onClick={() => createCommunity()}>
             Create Community
