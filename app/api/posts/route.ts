@@ -20,7 +20,7 @@ export async function GET(req: Request) {
       },
     });
 
-    followedCommunitiesIds = followedCommunitiesIds.map(({ subg }) => subg.id);
+    followedCommunitiesIds = followedCommunities.map((sub) => sub.subgroup.id)
   }
 
   try {

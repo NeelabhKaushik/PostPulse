@@ -70,7 +70,6 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                     const replyVote = reply.votes.find(
                       (vote) => vote.userId === session?.user?.id
                     );
-                    window.alert(replyVote);
 
                     return (
                       <div
