@@ -55,6 +55,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                     postId={postId!}
                     currentVote={topLevelCommentVote}
                     votesAmt={topLevelCommentVotesAmt}
+                    authorUsername={topLevelComment.author.username!}
                   />
                 </div>
                 {topLevelComment.replies
@@ -81,6 +82,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                           currentVote={replyVote}
                           votesAmt={replyVotesAmt}
                           postId={postId!}
+                          authorUsername = {reply.author.username!}
                         />
                       </div>
                     );
