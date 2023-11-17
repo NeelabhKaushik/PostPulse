@@ -74,7 +74,7 @@ const PostComment = ({
           className="h-6 w-6"
         />
         <div className="ml-2 flex items-center gap-x-2">
-          <Link href={`/u/${comment.author.name}`} className="underline">
+          <Link href={`/u/${comment.author.id}`} className="underline">
             <p className="text-sm font-medium text-gray-900">
               u/{comment.author.name}
             </p>
