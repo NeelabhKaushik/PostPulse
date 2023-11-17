@@ -13,8 +13,8 @@ export async function DELETE(req: Request) {
 
     const { postId, authorId } = body;
 
-    //@ts-ignore
-    if(session.user.id !== authorId) {
+    // @ts-ignore
+    if (session?.user?.id !== authorId) {
       return new Response("Unauthorized", { status: 401 });
     }
 
@@ -43,6 +43,6 @@ export async function DELETE(req: Request) {
       return new Response("Invalid request", { status: 400 });
     }
 
-    return new Response("something went wrong", { status: 500 });
+    return new Response("Something went wrong", { status: 500 });
   }
 }
