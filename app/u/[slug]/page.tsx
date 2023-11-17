@@ -2,12 +2,12 @@ import ProfilePostFeed from "@/components/ProfilePostFeed";
 import ToFeedButton from "@/components/ToFeedButton";
 import { UserAvatar } from "@/components/UserAvatar";
 import { db } from "@/lib/db";
-import { format, sub } from "date-fns";
+import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
-  // const session = await getAuthSession();
+
 
   const userDetails = await db.user.findFirst({
     where: { username: slug },
@@ -46,7 +46,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
           {userDetails?.Post && (
-            <ProfilePostFeed initialPosts={userDetails.Post} />
+            <ProfilePostFeed initialPosts={userDetails.Post}/>
           )}
           {/* info sidebar */}
           <div className="flex flex-col">

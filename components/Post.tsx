@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { PostDeleteRequest } from "@/lib/validators/post";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -49,6 +50,7 @@ const Post = ({
 }: PostProps) => {
   const pRef = useRef<HTMLParagraphElement>(null);
   const router = useRouter();
+  const { data: session } = useSession();
 
   const { mutate: deletePost } = useMutation({
     mutationFn: async ({ postId, authorId }: PostDeleteRequest) => {
@@ -148,7 +150,9 @@ const Post = ({
         >
           <MessageSquare className="h-4 w-4" /> {commentAmt} comments
         </Link>
-        {/* {whereRender && (
+
+        {// @ts-ignore
+        whereRender && session?.user?.id === post.authorId && (
           <AlertDialog>
             <AlertDialogTrigger>
               <DeleteIcon className="h-4 w-4" color="red"></DeleteIcon>
@@ -165,7 +169,8 @@ const Post = ({
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    deletePost({ postId: post.id, authorId: post.authorId });
+                    // @ts-ignore
+                    deletePost({ postId: post.id, authorId: session.user?.id });
                   }}
                 >
                   Continue
@@ -173,7 +178,7 @@ const Post = ({
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-        )} */}
+        )}
       </div>
     </div>
   );

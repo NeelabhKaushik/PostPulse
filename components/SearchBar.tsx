@@ -14,7 +14,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
 } from "./ui/command";
 
 const SearchBar = () => {
@@ -62,6 +62,7 @@ const SearchBar = () => {
   }, []);
 
   const commandRef = useRef<HTMLDivElement>(null);
+
   const pathname = usePathname();
   useEffect(() => {
     setInput("");
@@ -104,7 +105,7 @@ const SearchBar = () => {
                     router.refresh();
                   }}
                   key={user.id}
-                  value={user.name!}
+                  value={user.username!}
                 >
                   <Users className="mr-2 h-4 w-4" />
                   <a href={`/u/${user.username}`}>u/{user.username}</a>

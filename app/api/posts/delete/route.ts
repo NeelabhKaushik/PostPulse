@@ -9,7 +9,6 @@ export async function DELETE(req: Request) {
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 });
     }
-
     const body = await req.json();
 
     const { postId, authorId } = body;
@@ -26,10 +25,6 @@ export async function DELETE(req: Request) {
     if (!posts) {
       return new Response("Post not found", { status: 404 });
     }
-
-    // if (post.author !== authorId) {
-    //   return new Response("Unauthorized", { status: 401 });
-    // }
 
     await db.post.delete({
       where: {

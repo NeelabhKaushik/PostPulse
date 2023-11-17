@@ -9,7 +9,7 @@ interface ProfilePostFeedProps {
 }
 
 const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
-    const { data: session } = useSession();
+  const { data: session } = useSession();
   const posts = initialPosts?.flatMap((page) => page) ?? initialPosts;
 
   return (
@@ -22,14 +22,14 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
         }, 0);
 
         const currentVote = post.votes.find(
-            //@ts-ignore
+          //@ts-ignore
           (vote: any) => vote.userId === session?.user?.id
         );
 
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-            <li key={post.id} >
+            <li key={post.id}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -54,8 +54,6 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
           );
         }
       })}
-
-
     </ul>
   );
 };
