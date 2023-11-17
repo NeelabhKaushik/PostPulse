@@ -46,7 +46,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
           )}
           {/* info sidebar */}
           <div className="flex flex-col">
-            <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
+            <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last mb-2">
               <div className="px-6 py-4">
                 <p className="font-semibold py-3">
                   About u/{userDetails?.username || "u/" + slug}
