@@ -61,6 +61,7 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
 
         const currentVote = post.votes.find(
 
+          //@ts-ignore
           (vote: any) => vote.userId === session?.user?.id
         );
 

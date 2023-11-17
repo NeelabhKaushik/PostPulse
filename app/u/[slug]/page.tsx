@@ -2,7 +2,7 @@ import ProfilePostFeed from "@/components/ProfilePostFeed";
 import ToFeedButton from "@/components/ToFeedButton";
 import { UserAvatar } from "@/components/UserAvatar";
 import { db } from "@/lib/db";
-import { format } from "date-fns";
+import { format, sub } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -23,7 +23,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
       createdSubgroup: {
         include: {
           subscribers: true,
-        }
+        },
       },
     },
   });
@@ -77,11 +77,11 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                 </div>
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">Created groups</dt>
-                  {/* <dd className="flex items-start gap-x-2">
+                  <dd className="flex items-start gap-x-2">
                     <div className="text-gray-900">
-                      {userDetails?.createdSubgroup.}
+                      {userDetails?.createdSubgroup.length}
                     </div>
-                  </dd> */}
+                  </dd>
                 </div>
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">Published Posts</dt>
@@ -105,6 +105,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                 {userDetails?.createdSubgroup.map((subgroup) => {
                   return (
                     <div className="flex justify-between gap-x-4 py-3">
+                      
                       <Link href={`/g/${subgroup.name}`}>
                         <dt className="text-gray-500 underline">
                           {subgroup.name}
@@ -114,7 +115,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                         {format(subgroup.createdAt, "MMMM d, yyyy")}
                       </dd>
                       <dd className="text-gray-700">
-                        {userDetails.createdSubgroup.length}
+                        {subgroup.subscribers.length}
                       </dd>
                     </div>
                   );
