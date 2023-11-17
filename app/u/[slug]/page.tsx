@@ -102,10 +102,20 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                 </p>
               </div>
               <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
+              <div className="flex justify-between gap-x-4 py-3">
+                        <dt className=" text-gray-900">
+                          Group name
+                        </dt>
+                      <dd className="text-gray-900">
+                        Created At
+                      </dd>
+                      <dd className="text-gray-900">
+                        Members
+                      </dd>
+                    </div>
                 {userDetails?.createdSubgroup.map((subgroup) => {
                   return (
-                    <div className="flex justify-between gap-x-4 py-3">
-                      
+                    <div className="flex items-center justify-between  gap-x-4 py-3 ">
                       <Link href={`/g/${subgroup.name}`}>
                         <dt className="text-gray-500 underline">
                           {subgroup.name}
