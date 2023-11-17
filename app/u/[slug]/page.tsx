@@ -98,7 +98,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
             <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
               <div className="px-6 py-4">
                 <p className="font-semibold py-3">
-                  Communities by u/{userDetails?.username || "u/" + slug}
+                  Groups by u/{userDetails?.username || "u/" + slug}
                 </p>
               </div>
               <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
