@@ -1,15 +1,15 @@
 "use client";
 
 import { ExtendedPost } from "@/types/db";
-import Post from "./Post";
 import { useSession } from "next-auth/react";
+import Post from "./Post";
 
 interface ProfilePostFeedProps {
   initialPosts: ExtendedPost[];
 }
 
 const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
-  const session = useSession();
+    const { data: session } = useSession();
   const posts = initialPosts?.flatMap((page) => page) ?? initialPosts;
 
   return (
@@ -22,13 +22,14 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
         }, 0);
 
         const currentVote = post.votes.find(
+            //@ts-ignore
           (vote: any) => vote.userId === session?.user?.id
         );
 
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-            <li key={post.id}>
+            <li key={post.id} >
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -51,6 +52,8 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
           );
         }
       })}
+
+
     </ul>
   );
 };

@@ -20,7 +20,11 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
           subgroup: true,
         },
       },
-      createdSubgroup: true,
+      createdSubgroup: {
+        include: {
+          subscribers: true,
+        }
+      },
     },
   });
 
@@ -73,11 +77,11 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                 </div>
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">Created groups</dt>
-                  <dd className="flex items-start gap-x-2">
+                  {/* <dd className="flex items-start gap-x-2">
                     <div className="text-gray-900">
-                      {userDetails?.createdSubgroup.length}
+                      {userDetails?.createdSubgroup.}
                     </div>
-                  </dd>
+                  </dd> */}
                 </div>
                 <div className="flex justify-between gap-x-4 py-3">
                   <dt className="text-gray-500">Published Posts</dt>
@@ -108,6 +112,9 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                       </Link>
                       <dd className="text-gray-700">
                         {format(subgroup.createdAt, "MMMM d, yyyy")}
+                      </dd>
+                      <dd className="text-gray-700">
+                        {userDetails.createdSubgroup.length}
                       </dd>
                     </div>
                   );
