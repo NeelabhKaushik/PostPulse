@@ -46,7 +46,6 @@ export async function GET(req: Request) {
     );
   } catch (error) {
     // Handle errors, e.g., network issues or invalid URLs
-    console.error(error);
     return new Response(
       JSON.stringify({ success: 0, error: "Failed to fetch data" }),
       { status: 500 }

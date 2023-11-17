@@ -20,14 +20,12 @@ export async function DELETE(req: Request) {
       },
       include: {
         author: true,
-      }
+      },
     });
 
     if (!posts) {
       return new Response("Post not found", { status: 404 });
     }
-    
-    console.log(posts)
 
     // if (post.author !== authorId) {
     //   return new Response("Unauthorized", { status: 401 });

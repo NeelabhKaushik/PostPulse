@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Command,
   CommandEmpty,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -70,8 +71,6 @@ const SearchBar = () => {
   useOnClickOutside(commandRef, () => {
     setInput("");
   });
-
-  console.log(userResults);
 
   return (
     <Command
