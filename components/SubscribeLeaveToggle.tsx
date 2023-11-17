@@ -94,7 +94,7 @@ const SubscribeLeaveToggle = ({
       isLoading={isUnsubLoading}
       onClick={() => unsubscribe()}
     >
-      Leave community
+      Leave Group
     </Button>
   ) : (
     <Button

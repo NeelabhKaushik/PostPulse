@@ -2,12 +2,11 @@
 
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
 import { Button } from "./ui/button";
 
 interface CloseModalProps {}
 
-const CloseModal: FC<CloseModalProps> = ({}) => {
+const CloseModal = ({}:CloseModalProps) => {
   const router = useRouter();
 
   return (

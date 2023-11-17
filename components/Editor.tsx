@@ -22,7 +22,7 @@ interface EditorProps {
   subgroupId: string;
 }
 
-export const Editor: React.FC<EditorProps> = ({ subgroupId }) => {
+export const Editor = ({ subgroupId } : EditorProps) => {
   const {
     register,
     handleSubmit,
@@ -55,7 +55,7 @@ export const Editor: React.FC<EditorProps> = ({ subgroupId }) => {
       });
     },
     onSuccess: () => {
-      // turn pathname /g/mycommunity/submit into /g/mycommunity
+      // turn pathname /g/Group/submit into /g/Group
       const newPathname = pathname.split("/").slice(0, -1).join("/");
       router.push(newPathname);
 

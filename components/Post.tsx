@@ -4,7 +4,7 @@ import { formatTimeToNow } from "@/lib/utils";
 import { Post, User, Vote } from "@prisma/client";
 import { MessageSquare } from "lucide-react";
 import Link from "next/link";
-import { FC, useRef } from "react";
+import { useRef } from "react";
 import EditorOutput from "./EditorOutput";
 import PostVoteClient from "./post-vote/PostVoteClient";
 
@@ -21,13 +21,13 @@ interface PostProps {
   commentAmt: number;
 }
 
-const Post: FC<PostProps> = ({
+const Post = ({
   post,
   votesAmt: votesAmt,
   currentVote: currentVote,
   subgroupName,
   commentAmt,
-}) => {
+}:PostProps) => {
   const pRef = useRef<HTMLParagraphElement>(null);
 
   return (

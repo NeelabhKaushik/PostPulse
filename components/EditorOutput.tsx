@@ -1,8 +1,7 @@
 "use client";
 
 import CustomCodeRenderer from "@/components/renderers/CustomCodeRenderer";
-import CustomImageRenderer from "@/components/renderers/CustomImageRenderer"
-import { FC } from "react";
+import CustomImageRenderer from "@/components/renderers/CustomImageRenderer";
 import dynamic from "next/dynamic";
 
 const Output = dynamic(
@@ -26,7 +25,7 @@ const style = {
   },
 };
 
-const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
+const EditorOutput = ({ content }: EditorOutputProps) => {
   return (
     <Output
       style={style}

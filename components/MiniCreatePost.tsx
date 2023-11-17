@@ -1,10 +1,9 @@
 "use client";
 
 import { Image as ImageIcon, Link2 } from "lucide-react";
-import { FC } from "react";
-import { UserAvatar } from "./UserAvatar";
 import type { Session } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
+import { UserAvatar } from "./UserAvatar";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -12,7 +11,7 @@ interface MiniCreatePostProps {
   session: Session | null;
 }
 
-const MiniCreatePost: FC<MiniCreatePostProps> = ({ session }) => {
+const MiniCreatePost = ({ session }:MiniCreatePostProps) => {
   const router = useRouter();
   const pathname = usePathname();
 

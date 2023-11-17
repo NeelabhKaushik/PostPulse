@@ -38,7 +38,7 @@ export default async function Home() {
               })}
               href={`/g/create`}
             >
-              Create Community
+              Create Group
             </Link>
           </dl>
         </div>

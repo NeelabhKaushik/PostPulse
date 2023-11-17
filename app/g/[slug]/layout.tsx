@@ -92,7 +92,7 @@ const Layout = async ({
               {//@ts-ignore
               subgroup.creatorId === session?.user?.id ? (
                 <div className="flex justify-between gap-x-4 py-3">
-                  <dt className="text-gray-500">You created this community</dt>
+                  <dt className="text-gray-500">You created this group.</dt>
                 </div>
               ) : null}
               {
