@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -73,9 +74,11 @@ const PostComment = ({
           className="h-6 w-6"
         />
         <div className="ml-2 flex items-center gap-x-2">
-          <p className="text-sm font-medium text-gray-900">
-            u/{comment.author.name}
-          </p>
+          <Link href={`/u/${comment.author.name}`} className="underline">
+            <p className="text-sm font-medium text-gray-900">
+              u/{comment.author.name}
+            </p>
+          </Link>
           <p className="max-h-40 truncate text-xs text-zinc-500">
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>
