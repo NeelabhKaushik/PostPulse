@@ -23,7 +23,6 @@ export async function GET(req: Request) {
 
     followedCommunitiesIds = followedCommunities.map((sub) => sub.subgroup.id)
   }
-
   try {
     const { limit, page, subgroupName } = z
       .object({
@@ -32,19 +31,19 @@ export async function GET(req: Request) {
         subgroupName: z.string().nullish().optional(),
       })
       .parse({
-        subgroupName: url.searchParams.get("subgroupName"),
-        limit: url.searchParams.get("limit"),
-        page: url.searchParams.get("page"),
-      });
+        subgroupName: url.searchParams.get('subgroupName'),
+        limit: url.searchParams.get('limit'),
+        page: url.searchParams.get('page'),
+      })
 
-    let whereClause = {};
+    let whereClause = {}
 
     if (subgroupName) {
       whereClause = {
         subgroup: {
           name: subgroupName,
         },
-      };
+      }
     } else if (session) {
       whereClause = {
         subgroup: {
@@ -52,14 +51,14 @@ export async function GET(req: Request) {
             in: followedCommunitiesIds,
           },
         },
-      };
+      }
     }
 
     const posts = await db.post.findMany({
       take: parseInt(limit),
-      skip: (parseInt(page) - 1) * parseInt(limit),
+      skip: (parseInt(page) - 1) * parseInt(limit), // skip should start from 0 for page 1
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
       include: {
         subgroup: true,
@@ -68,18 +67,10 @@ export async function GET(req: Request) {
         comments: true,
       },
       where: whereClause,
-    });
+    })
 
-    return new Response(JSON.stringify(posts));
+    return new Response(JSON.stringify(posts))
   } catch (error) {
-    error;
-    if (error instanceof z.ZodError) {
-      return new Response("Invalid request", { status: 400 });
-    }
-
-    return new Response(
-      "Could not fetch more post",
-      { status: 500 }
-    );
+    return new Response('Could not fetch posts', { status: 500 })
   }
 }

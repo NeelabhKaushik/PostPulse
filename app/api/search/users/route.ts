@@ -6,17 +6,17 @@ export async function GET(req: Request) {
 
   if (!q) return new Response("Invalid query", { status: 400 });
 
-  const results = await db.subgroup.findMany({
+  const result = await db.user.findMany({
     where: {
-      name: {
+      username: {
         contains: q,
       },
     },
-    include: {  
+    include: {
       _count: true,
     },
     take: 5,
   });
 
-  return new Response(JSON.stringify(results));
+  return new Response(JSON.stringify(result));
 }

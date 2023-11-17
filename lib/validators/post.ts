@@ -13,4 +13,11 @@ export const PostValidator = z.object({
   content: z.any(),
 });
 
+export const PostDeleteValidator = z.object({
+  postId: z.string(),
+  authorId: z.string(),
+});
+
 export type PostCreationRequest = z.infer<typeof PostValidator>;
+
+export type PostDeleteRequest = z.infer<typeof PostDeleteValidator>;

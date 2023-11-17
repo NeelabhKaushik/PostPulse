@@ -1,18 +1,18 @@
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { PostVoteValidator } from '@/lib/validators/vote'
-import { z } from 'zod'
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { PostVoteValidator } from "@/lib/validators/vote";
+import { z } from "zod";
 
 export async function PATCH(req: Request) {
   try {
-    const body = await req.json()
+    const body = await req.json();
 
-    const { postId, voteType } = PostVoteValidator.parse(body)
+    const { postId, voteType } = PostVoteValidator.parse(body);
 
-    const session = await getAuthSession()
+    const session = await getAuthSession();
 
     if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 })
+      return new Response("Unauthorized", { status: 401 });
     }
 
     // check if user has already voted on this post
@@ -22,7 +22,7 @@ export async function PATCH(req: Request) {
         userId: session.user.id,
         postId,
       },
-    })
+    });
 
     const post = await db.post.findUnique({
       where: {
@@ -32,10 +32,10 @@ export async function PATCH(req: Request) {
         author: true,
         votes: true,
       },
-    })
+    });
 
     if (!post) {
-      return new Response('Post not found', { status: 404 })
+      return new Response("Post not found", { status: 404 });
     }
 
     if (existingVote) {
@@ -49,17 +49,9 @@ export async function PATCH(req: Request) {
               userId: session.user.id,
             },
           },
-        })
+        });
 
-        // Recount the votes
-        const votesAmt = post.votes.reduce((acc, vote) => {
-          if (vote.type === 'UP') return acc + 1
-          if (vote.type === 'DOWN') return acc - 1
-          return acc
-        }, 0)
-
-
-        return new Response('OK')
+        return new Response("OK");
       }
 
       // if vote type is different, update the vote
@@ -74,16 +66,9 @@ export async function PATCH(req: Request) {
         data: {
           type: voteType,
         },
-      })
+      });
 
-      // Recount the votes
-      const votesAmt = post.votes.reduce((acc, vote) => {
-        if (vote.type === 'UP') return acc + 1
-        if (vote.type === 'DOWN') return acc - 1
-        return acc
-      }, 0)
-
-      return new Response('OK')
+      return new Response("OK");
     }
 
     // if no existing vote, create a new vote
@@ -94,25 +79,25 @@ export async function PATCH(req: Request) {
         userId: session.user.id,
         postId,
       },
-    })
+    });
 
     // Recount the votes
     const votesAmt = post.votes.reduce((acc, vote) => {
-      if (vote.type === 'UP') return acc + 1
-      if (vote.type === 'DOWN') return acc - 1
-      return acc
-    }, 0)
+      if (vote.type === "UP") return acc + 1;
+      if (vote.type === "DOWN") return acc - 1;
+      return acc;
+    }, 0);
 
-    return new Response('OK')
+    return new Response("OK");
   } catch (error) {
-    (error)
+    error;
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 400 })
+      return new Response(error.message, { status: 400 });
     }
 
     return new Response(
-      'Could not post to subreddit at this time. Please try later',
+      "Could not post to subreddit at this time. Please try later",
       { status: 500 }
-    )
+    );
   }
 }

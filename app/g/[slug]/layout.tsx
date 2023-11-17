@@ -11,7 +11,7 @@ import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "PostPulse",
-  description: "A Reddit clone built with Next.js and TypeScript.",
+  description: "A centralized hub for diverse discussions on trending topics.",
 };
 
 const Layout = async ({
@@ -21,6 +21,7 @@ const Layout = async ({
   children: ReactNode;
   params: { slug: string };
 }) => {
+
   const session = await getAuthSession();
 
   const subgroup = await db.subgroup.findFirst({
@@ -35,7 +36,7 @@ const Layout = async ({
     },
   });
 
-  const subscription = !session?.user
+  const subscription = session?.user
     ? undefined
     : await db.subscription.findFirst({
         where: {
@@ -45,6 +46,7 @@ const Layout = async ({
           user: {
             //@ts-ignore
             id: session.user.id,
+            
           },
         },
       });
@@ -75,6 +77,12 @@ const Layout = async ({
               <p className="font-semibold py-3">About g/{subgroup.name}</p>
             </div>
             <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
+              <div className="flex justify-between gap-x-4 py-3">
+                <dt className="text-gray-500">Created by</dt>
+                <dd className="text-gray-700">
+                  {subgroup.name}
+                </dd>
+              </div>
               <div className="flex justify-between gap-x-4 py-3">
                 <dt className="text-gray-500">Created</dt>
                 <dd className="text-gray-700">

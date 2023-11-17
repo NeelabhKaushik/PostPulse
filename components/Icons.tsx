@@ -13,7 +13,7 @@ export const Icons = {
       stroke="currentColor"
       stroke-width="2"
       stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
       className="lucide lucide-activity"
     >
       <path d="M22 12h-4l-3 9L9 3l-3 9H2" />

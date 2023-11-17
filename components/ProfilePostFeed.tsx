@@ -36,6 +36,7 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
                 subgroupName={post.subgroup.name}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
+                whereRender="profile"
               />
             </li>
           );
@@ -48,6 +49,7 @@ const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
               subgroupName={post.subgroup.name}
               votesAmt={votesAmt}
               currentVote={currentVote}
+              whereRender="profile"
             />
           );
         }
