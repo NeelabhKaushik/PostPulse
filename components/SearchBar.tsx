@@ -1,22 +1,21 @@
 "use client";
 
+import { useOnClickOutside } from "@/hooks/use-on-click-outside";
+import { Prisma, Subgroup, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import debounce from "lodash.debounce";
+import { Users } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Command,
-  CommandEmpty,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList,
+  CommandList
 } from "./ui/command";
-import { useCallback, useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { Prisma, Subgroup, User } from "@prisma/client";
-import { usePathname, useRouter } from "next/navigation";
-import debounce from "lodash.debounce";
-import { Users } from "lucide-react";
-import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 
 const SearchBar = () => {
   const router = useRouter();

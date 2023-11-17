@@ -2,9 +2,9 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Icons } from "./Icons";
+import SearchBar from "./SearchBar";
 import { UserAccountNav } from "./UserAccountNav";
 import { buttonVariants } from "./ui/button";
-import SearchBar from "./SearchBar";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
