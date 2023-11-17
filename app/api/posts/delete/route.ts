@@ -13,6 +13,11 @@ export async function DELETE(req: Request) {
 
     const { postId, authorId } = body;
 
+    //@ts-ignore
+    if(session.user.id !== authorId) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
     const posts = db.post.findFirst({
       where: {
         id: postId,

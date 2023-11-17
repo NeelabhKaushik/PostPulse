@@ -44,8 +44,8 @@ const Layout = async ({
             name: slug,
           },
           user: {
-            //@ts-ignore
-            id: session.user.id,
+            // @ts-ignore
+            id: session?.user?.id,
             
           },
         },

@@ -170,7 +170,7 @@ const Post = ({
                 <AlertDialogAction
                   onClick={() => {
                     // @ts-ignore
-                    deletePost({ postId: post.id, authorId: session.user?.id });
+                    deletePost({ postId: post.id, authorId: post.authorId });
                   }}
                 >
                   Continue
