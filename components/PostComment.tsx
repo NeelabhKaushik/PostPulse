@@ -74,11 +74,11 @@ const PostComment = ({
           className="h-6 w-6"
         />
         <div className="ml-2 flex items-center gap-x-2">
-          <Link href={`/u/${comment.author.id}`} className="underline">
+          {/* <Link href={`/u/${comment.author.id}`} className="underline"> */}
             <p className="text-sm font-medium text-gray-900">
               u/{comment.author.name}
             </p>
-          </Link>
+          {/* </Link> */}
           <p className="max-h-40 truncate text-xs text-zinc-500">
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>
