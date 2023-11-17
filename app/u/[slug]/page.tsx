@@ -1,25 +1,17 @@
 import ProfilePostFeed from "@/components/ProfilePostFeed";
 import ToFeedButton from "@/components/ToFeedButton";
 import { UserAvatar } from "@/components/UserAvatar";
-import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ReactNode } from "react";
-Link
+Link;
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-const page = async ({
-  children,
-  params: { slug },
-}: {
-  children: ReactNode;
-  params: { slug: string };
-}) => {
-  const session = await getAuthSession();
+const page = async ({ params: { slug } }: { params: { slug: string } }) => {
+  // const session = await getAuthSession();
 
   const userDetails = await db.user.findFirst({
     where: { username: slug },
@@ -53,7 +45,6 @@ const page = async ({
           <h1 className="font-bold text-3xl md:text-4xl"> Posts by u/{slug}</h1>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
-          <div className="flex flex-col col-span-2 space-y-6">{children}</div>
           {userDetails?.Post && (
             <ProfilePostFeed initialPosts={userDetails.Post} />
           )}
@@ -114,8 +105,10 @@ const page = async ({
                 {userDetails?.createdSubgroup.map((subgroup) => {
                   return (
                     <div className="flex justify-between gap-x-4 py-3">
-                      <Link href = {`/g/${subgroup.name}`}>
-                      <dt className="text-gray-500 underline">{subgroup.name}</dt>
+                      <Link href={`/g/${subgroup.name}`}>
+                        <dt className="text-gray-500 underline">
+                          {subgroup.name}
+                        </dt>
                       </Link>
                       <dd className="text-gray-700">
                         {format(subgroup.createdAt, "MMMM d, yyyy")}
