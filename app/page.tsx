@@ -28,7 +28,7 @@ export default async function Home() {
             <div className="flex justify-between gap-x-4 py-3">
               <p className="text-zinc-500">
                 Your personal PostPulse frontpage. Come here to check in with your
-                favorite communities.
+                favorite groups.
               </p>
             </div>
 

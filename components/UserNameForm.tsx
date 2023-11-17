@@ -59,6 +59,7 @@ const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
         description: "Your username has been updated.",
       });
       router.push("/");
+      router.refresh();
     },
   });
   return (

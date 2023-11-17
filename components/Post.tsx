@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { formatTimeToNow } from "@/lib/utils";
 import { Post, User, Vote } from "@prisma/client";
@@ -52,7 +52,13 @@ const Post: FC<PostProps> = ({
                 <span className="px-1">•</span>
               </>
             ) : null}
-            <span>Posted by u/{post.author.username}</span>{" "}
+            <span>
+              Posted by
+              {" "}
+              <Link href={`/u/${post?.author.username}`} className="underline">
+                u/{post?.author.username}
+              </Link>
+            </span>{" "}
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
           <a href={`/g/${subgroupName}/post/${post.id}`}>

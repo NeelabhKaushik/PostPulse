@@ -10,45 +10,12 @@ import { FC, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
 
-interface PostFeedProps {
+interface ProfilePostFeedProps {
   initialPosts: ExtendedPost[];
-  subgroupName?: string;
 }
 
-const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
-  const lastPostRef = useRef<HTMLElement>(null);
-  const { ref, entry } = useIntersection({
-    root: lastPostRef.current,
-    threshold: 1,
-  });
-  const { data: session } = useSession();
-
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["infinite-query"],
-    async ({ pageParam = 1 }) => {
-      const query =
-        `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
-        (!!subgroupName ? `&subgroupName=${subgroupName}` : "");
-
-      const { data } = await axios.get(query);
-      return data as ExtendedPost[];
-    },
-
-    {
-      getNextPageParam: (_, pages) => {
-        return pages.length + 1;
-      },
-      initialData: { pages: [initialPosts], pageParams: [1] },
-    }
-  );
-
-  useEffect(() => {
-    if (entry?.isIntersecting) {
-      fetchNextPage(); // Load more posts when the last post comes into view
-    }
-  }, [entry, fetchNextPage]);
-
-  const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+const ProfilePostFeed = ({ initialPosts }: ProfilePostFeedProps) => {
+  const posts = initialPosts?.flatMap((page) => page) ?? initialPosts;
 
   return (
     <ul className="flex flex-col col-span-2 space-y-6">
@@ -67,7 +34,7 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
         if (index === posts.length - 1) {
           // Add a ref to the last post in the list
           return (
-            <li key={post.id} ref={ref}>
+            <li key={post.id}>
               <Post
                 post={post}
                 commentAmt={post.comments.length}
@@ -90,14 +57,8 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
           );
         }
       })}
-
-      {isFetchingNextPage && (
-        <li className="flex justify-center">
-          <Loader2 className="w-6 h-6 text-zinc-500 animate-spin" />
-        </li>
-      )}
     </ul>
   );
 };
 
-export default PostFeed;
+export default ProfilePostFeed;

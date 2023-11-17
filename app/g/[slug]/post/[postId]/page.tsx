@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { formatTimeToNow } from "@/lib/utils";
 import { Post, User, Vote } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 
@@ -19,18 +20,17 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 const page = async ({ params }: PageProps) => {
-
   let post: (Post & { votes: Vote[]; author: User }) | null = null;
 
-    post = await db.post.findFirst({
-      where: {
-        id: params.postId,
-      },
-      include: {
-        votes: true,
-        author: true,
-      },
-    });
+  post = await db.post.findFirst({
+    where: {
+      id: params.postId,
+    },
+    include: {
+      votes: true,
+      author: true,
+    },
+  });
 
   if (!post) return notFound();
   return (
@@ -53,16 +53,23 @@ const page = async ({ params }: PageProps) => {
         </Suspense>
         <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
           <p className="max-h-40 mt-1 truncate text-gray-500">
-            Posted by u/{post?.author.username }{" "}
-            {formatTimeToNow(new Date(post?.createdAt ))}
+            Posted by{" "}
+            <Link href={`/u/${post?.author.username}`} className="underline">
+              u/{post?.author.username}
+            </Link>
+            {" "}{formatTimeToNow(new Date(post?.createdAt))}
           </p>
           <h1 className="text-xl font-semibold py-2 leading-6 text-gray-900">
-            {post?.title }
+            {post?.title}
           </h1>
 
-          <EditorOutput content={post?.content } />
+          <EditorOutput content={post?.content} />
 
-          <Suspense fallback= {<Loader2 className="h-5 w-5 animate-spin text-zinc-500" />}>
+          <Suspense
+            fallback={
+              <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+            }
+          >
             <CommentSection postId={post?.id} />
           </Suspense>
         </div>
