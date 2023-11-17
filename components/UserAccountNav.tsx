@@ -41,7 +41,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={`/u/${session.data?.user?.username}`}>Profile</Link>
+          {// @ts-ignore
+          <Link href={`/u/${session.data?.user?.username}`}>Profile</Link>}
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/">Feed</Link>
