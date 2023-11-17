@@ -5,10 +5,6 @@ import { db } from "@/lib/db";
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-Link;
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
   // const session = await getAuthSession();
