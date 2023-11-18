@@ -4,12 +4,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "PostPulse",
   description: "A centralized hub for diverse discussions on trending topics.",
 };
@@ -21,8 +20,7 @@ const Layout = async ({
   children: ReactNode;
   params: { slug: string };
 }) => {
-
-  const session = await getAuthSession()
+  const session = await getAuthSession();
 
   const subgroup = await db.subgroup.findFirst({
     where: { name: slug },
@@ -34,7 +32,7 @@ const Layout = async ({
         },
       },
     },
-  })
+  });
 
   const subscription = !session?.user
     ? undefined
@@ -48,11 +46,11 @@ const Layout = async ({
             id: session?.user?.id,
           },
         },
-      })
+      });
 
-  const isSubscribed = !!subscription
+  const isSubscribed = !!subscription;
 
-  if (!subgroup) return notFound()
+  if (!subgroup) return notFound();
 
   const memberCount = await db.subscription.count({
     where: {
@@ -60,7 +58,7 @@ const Layout = async ({
         name: slug,
       },
     },
-  })
+  });
 
   return (
     <div className="sm:container max-w-7xl mx-auto h-full pt-12">
@@ -78,9 +76,7 @@ const Layout = async ({
             <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
               <div className="flex justify-between gap-x-4 py-3">
                 <dt className="text-gray-500">Created by</dt>
-                <dd className="text-gray-700">
-                  {subgroup.name}
-                </dd>
+                <dd className="text-gray-700">{subgroup.name}</dd>
               </div>
               <div className="flex justify-between gap-x-4 py-3">
                 <dt className="text-gray-500">Created</dt>
@@ -102,8 +98,7 @@ const Layout = async ({
                   <dt className="text-gray-500">You created this group.</dt>
                 </div>
               ) : null}
-              {
-              //@ts-ignore
+              {//@ts-ignore
               subgroup.creatorId !== session?.user?.id ? (
                 <SubscribeLeaveToggle
                   isSubscribed={isSubscribed}
@@ -111,23 +106,27 @@ const Layout = async ({
                   subgroupName={subgroup.name}
                 />
               ) : null}
-              {session ?  <Link
-                className={buttonVariants({
-                  variant: "outline",
-                  className: "w-full mb-6",
-                })}
-                href={`/g/${slug}/submit`}>
-                Create Post
-              </Link> : <Link
-                className={buttonVariants({
-                  variant: "outline",
-                  className: "w-full mb-6",
-                })}
-                href={`/sign-up`}
+              {session ? (
+                <Link
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full mb-6",
+                  })}
+                  href={`/g/${slug}/submit`}
                 >
-                Create Post
-              </Link>} 
-             
+                  Create Post
+                </Link>
+              ) : (
+                <Link
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full mb-6",
+                  })}
+                  href={`/sign-up`}
+                >
+                  Create Post
+                </Link>
+              )}
             </dl>
           </div>
         </div>
