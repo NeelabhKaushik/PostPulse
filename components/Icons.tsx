@@ -12,7 +12,7 @@ export const Icons = {
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
+      strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-activity"
     >

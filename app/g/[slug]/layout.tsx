@@ -22,7 +22,7 @@ const Layout = async ({
   params: { slug: string };
 }) => {
 
-  const session = await getAuthSession();
+  const session = await getAuthSession()
 
   const subgroup = await db.subgroup.findFirst({
     where: { name: slug },
@@ -34,9 +34,9 @@ const Layout = async ({
         },
       },
     },
-  });
+  })
 
-  const subscription = session?.user
+  const subscription = !session?.user
     ? undefined
     : await db.subscription.findFirst({
         where: {
@@ -45,15 +45,14 @@ const Layout = async ({
           },
           user: {
             // @ts-ignore
-            id: session?.user?.id,
-            
+            id: session.user.id,
           },
         },
-      });
+      })
 
-  const isSubscribed = !!subscription;
+  const isSubscribed = !!subscription
 
-  if (!subgroup) return notFound();
+  if (!subgroup) return notFound()
 
   const memberCount = await db.subscription.count({
     where: {
@@ -61,7 +60,7 @@ const Layout = async ({
         name: slug,
       },
     },
-  });
+  })
 
   return (
     <div className="sm:container max-w-7xl mx-auto h-full pt-12">
