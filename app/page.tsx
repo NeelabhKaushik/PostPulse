@@ -44,7 +44,7 @@ export default async function Home() {
               </Link>
             </dl>
           </div>
-          {session && <PopularGroups />}
+          <PopularGroups />
         </div>
       </div>
     </>
