@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "./Provider";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,9 @@ export default function RootLayout({
         inter.className
       )}
     >
+      <NextTopLoader
+      color="#333333"
+       />
       <body className="min-h-screen pt-12 bg-slate-50 antialiased">
         <Providers>
           <Navbar />

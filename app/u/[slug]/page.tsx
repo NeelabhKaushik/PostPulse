@@ -7,8 +7,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
-
-
   const userDetails = await db.user.findFirst({
     where: { username: slug },
     include: {
@@ -46,7 +44,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
           {userDetails?.Post && (
-            <ProfilePostFeed initialPosts={userDetails.Post}/>
+            <ProfilePostFeed initialPosts={userDetails.Post} />
           )}
           {/* info sidebar */}
           <div className="flex flex-col">
@@ -102,23 +100,18 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
                 </p>
               </div>
               <dl className="divide-y divide-gray-100 px-6 py-4 text-sm leading-6 bg-white">
-              <div className="flex justify-between gap-x-4 py-3">
-                        <dt className=" text-gray-900">
-                          Group name
-                        </dt>
-                      <dd className="text-gray-900">
-                        Created At
-                      </dd>
-                      <dd className="text-gray-900">
-                        Members
-                      </dd>
-                    </div>
+                <div className="flex justify-between gap-x-4 py-3">
+                  <dt className=" text-gray-900">Group name</dt>
+                  <dd className="text-gray-900">Created At</dd>
+                  <dd className="text-gray-900">Members</dd>
+                </div>
                 {userDetails?.createdSubgroup.map((subgroup) => {
                   return (
                     <div className="flex items-center justify-between  gap-x-4 py-3 ">
                       <Link href={`/g/${subgroup.name}`}>
-                        <dt className="text-gray-500 underline">
-                          {subgroup.name}
+                        <dt className="text-gray-500">
+                          <span style={{ fontWeight: "bold" }}>g/</span>
+                          <span className="underline">{subgroup.name}</span>
                         </dt>
                       </Link>
                       <dd className="text-gray-700">

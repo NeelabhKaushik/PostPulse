@@ -1,5 +1,6 @@
 import CustomFeed from "@/components/CustomFeed";
 import GeneralFeed from "@/components/GeneralFeed";
+import PopularGroups from "@/components/PopularGroups";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getAuthSession } from "@/lib/auth";
 import { Home as HomeIcon } from "lucide-react";
@@ -17,30 +18,33 @@ export default async function Home() {
         {session ? <CustomFeed /> : <GeneralFeed />}
 
         {/* Subgroup info */}
-        <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
-          <div className="bg-purple-100 px-6 py-4">
-            <p className="font-semibold py-3 flex items-center gap-1.5">
-              <HomeIcon className="h-4 w-4" />
-              Home
-            </p>
-          </div>
-          <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
-            <div className="flex justify-between gap-x-4 py-3">
-              <p className="text-zinc-500">
-                Your personal PostPulse frontpage. Come here to check in with your
-                favorite groups.
+        <div className="flex flex-col">
+          <div className="pb-2 mb-2 overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
+            <div className="bg-purple-100 px-6 py-4">
+              <p className="font-semibold py-3 flex items-center gap-1.5">
+                <HomeIcon className="h-4 w-4" />
+                Home
               </p>
             </div>
+            <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
+              <div className="flex justify-between gap-x-4 py-3">
+                <p className="text-zinc-500">
+                  Your personal PostPulse frontpage. Come here to check in with
+                  your favorite groups.
+                </p>
+              </div>
 
-            <Link
-              className={buttonVariants({
-                className: "w-full mt-4 mb-6",
-              })}
-              href={`/g/create`}
-            >
-              Create Group
-            </Link>
-          </dl>
+              <Link
+                className={buttonVariants({
+                  className: "w-full mt-4 mb-6",
+                })}
+                href={`/g/create`}
+              >
+                Create Group
+              </Link>
+            </dl>
+          </div>
+          {session && <PopularGroups />}
         </div>
       </div>
     </>
