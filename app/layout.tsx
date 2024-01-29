@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
 
           <ul className="container max-w-7xl mx-auto h-full pt-12">
             {children}
+            <Analytics /> 
             <SpeedInsights />
           </ul>
         </Providers>
