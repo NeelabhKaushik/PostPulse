@@ -5,7 +5,9 @@ import "./globals.css";
 import Providers from "./Provider";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
+
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +31,7 @@ export default function RootLayout({
         inter.className
       )}
     >
-      <NextTopLoader
-      color="#333333"
-      showSpinner={false}
-       />
+      <NextTopLoader color="#333333" showSpinner={false} />
       <body className="min-h-screen pt-12 bg-slate-50 antialiased">
         <Providers>
           <Navbar />
@@ -40,6 +39,7 @@ export default function RootLayout({
 
           <ul className="container max-w-7xl mx-auto h-full pt-12">
             {children}
+            <SpeedInsights />
           </ul>
         </Providers>
         <Toaster />

@@ -32,6 +32,7 @@ const page = async ({ params }: PageProps) => {
     },
   });
 
+  {console.log(post?.createdAt)}
   if (!post) return notFound();
   return (
     <div>
