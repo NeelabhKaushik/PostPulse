@@ -40,7 +40,7 @@ export default function RootLayout({
 
           <ul className="container max-w-7xl mx-auto h-full pt-12">
             {children}
-            <Analytics /> 
+            <Analytics />
             <SpeedInsights />
           </ul>
         </Providers>
