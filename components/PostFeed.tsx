@@ -43,7 +43,7 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
         return pages.length + 1;
       },
       initialData: { pages: [initialPosts], pageParams: [1] },
-    }
+    },
   );
 
   useEffect(() => {
@@ -64,9 +64,8 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
         }, 0);
 
         const currentVote = post.votes.find(
-
           //@ts-ignore
-          (vote: any) => vote.userId === session?.user?.id
+          (vote: any) => vote.userId === session?.user?.id,
         );
 
         if (index === posts.length - 1) {
