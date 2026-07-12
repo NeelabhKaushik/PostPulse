@@ -2,7 +2,6 @@
 
 import { toast } from "@/hooks/use-toast";
 import { formatTimeToNow } from "@/lib/utils";
-import { Post, User, Vote } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { DeleteIcon, MessageSquare } from "lucide-react";
@@ -26,12 +25,21 @@ import { PostDeleteRequest } from "@/lib/validators/post";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-type PartialVote = Pick<Vote, "type">;
+type PartialVote = {
+  type?: "UP" | "DOWN";
+};
 
 interface PostProps {
-  post: Post & {
-    author: User;
-    votes: Vote[];
+  post: {
+    id: string;
+    authorId: string;
+    title: string;
+    content: unknown;
+    createdAt: Date | string;
+    author: {
+      username?: string | null;
+    };
+    votes: PartialVote[];
   };
   votesAmt: number;
   subgroupName: string;
@@ -52,7 +60,7 @@ const Post = ({
   const router = useRouter();
   const { data: session } = useSession();
 
-  const { mutate: deletePost } = useMutation({
+  const { mutate: deletePost, status } = useMutation({
     mutationFn: async ({ postId, authorId }: PostDeleteRequest) => {
       const payload: PostDeleteRequest = {
         postId: postId,
@@ -94,8 +102,16 @@ const Post = ({
     },
   });
 
+  const isDeletingPost = status === "loading";
+
   return (
     <div className="rounded-md bg-white shadow">
+      {isDeletingPost ? (
+        <div className="h-1 w-full overflow-hidden rounded-t-md bg-red-100">
+          <div className="h-full w-full animate-pulse bg-red-500" />
+        </div>
+      ) : null}
+
       <div className="px-6 py-4 flex justify-between">
         <PostVoteClient
           postId={post.id}
@@ -151,34 +167,43 @@ const Post = ({
           <MessageSquare className="h-4 w-4" /> {commentAmt} comments
         </Link>
 
-        {// @ts-ignore
-        whereRender && session?.user?.id === post.authorId && (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <DeleteIcon className="h-4 w-4" color="red"></DeleteIcon>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your post.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    // @ts-ignore
-                    deletePost({ postId: post.id, authorId: post.authorId });
-                  }}
+        {
+          // @ts-ignore
+          whereRender && session?.user?.id === post.authorId && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  type="button"
+                  disabled={isDeletingPost}
+                  className="disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
+                  <DeleteIcon className="h-4 w-4" color="red"></DeleteIcon>
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your post.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={isDeletingPost}
+                    onClick={() => {
+                      // @ts-ignore
+                      deletePost({ postId: post.id, authorId: post.authorId });
+                    }}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )
+        }
       </div>
     </div>
   );
