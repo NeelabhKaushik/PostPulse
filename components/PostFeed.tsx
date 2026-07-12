@@ -23,8 +23,12 @@ const PostFeed = ({ initialPosts, subgroupName }: PostFeedProps) => {
   });
   const { data: session } = useSession();
 
+  const feedKey = subgroupName
+    ? ["infinite-query", subgroupName]
+    : ["infinite-query", session ? "custom-home" : "general-home"];
+
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["infinite-query"],
+    feedKey,
     async ({ pageParam = 1 }) => {
       const query =
         `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
